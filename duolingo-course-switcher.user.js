@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        DuoLingo Course Switcher
+// @name        Duolingo Course Switcher
 // @description Simplifies switching between courses that use different interface language (i.e., base language, the language from which you learn).
 // @namespace   http://moviemap.me/duoinc
 // @include     https://www.duolingo.com/*
