@@ -82,10 +82,10 @@ getCourseData();
 
 function updateCourses() {
     if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
-      // switch to greasemonkey storage
-      GM_setValue('dcs_courses', localStorage.getItem('dcs_courses'));
+		// switch to greasemonkey storage
+		GM_setValue('dcs_courses', localStorage.getItem('dcs_courses', '{}'));
     }
-    var courses = JSON.parse(GM_getValue('dcs_courses'));
+    var courses = JSON.parse(GM_getValue('dcs_courses', '{}'));
 	var cur_lang_data = curlangdata;
 	//xp to level
     for (i = 0; i < cur_lang_data.courses.length; i++) {
@@ -107,6 +107,7 @@ function updateCourses() {
 	var learning = cur_lang_data.courses;
 	activelanguagefrom = cur_lang_data.currentCourse.fromLanguage;
 	activelanguageto = cur_lang_data.currentCourse.learningLanguage;
+	courses[activelanguagefrom] = {};
     courses[activelanguagefrom] = learning;
     GM_setValue('dcs_courses', JSON.stringify(courses));
     return courses;
@@ -125,6 +126,30 @@ function updateCoursesOld(A) {
 }
 
 function sortList() {
+    var listitems = [].slice.call(document.getElementsByClassName("FromLang"));
+	var sumlevel = [];
+	for (j = 0; j < listitems.length; j++) {
+		sumlevel[j] = 0;
+		for (i = 0; i < listitems[j].getElementsByClassName("gray").length; i++) {
+			sumlevel[j] = sumlevel[j] + parseInt(listitems[j].getElementsByClassName("gray")[i].innerText.match(/\d+/),10);
+		}
+	}
+	var sortedlist = sortByLevel(listitems, sumlevel);
+    $.each(sortedlist, function(idx, itm) { $(itm).insertBefore('._1oVFS.HideThis'); });
+}
+
+function sortByLevel(elements, levels) {
+	var result = [];
+	for(i = 0; levels.length > 0; i++) {
+		var largelevel = levels.indexOf(Math.max.apply(null, levels));
+		result[i] = elements.splice(largelevel, 1)[0];
+		levels.splice(largelevel, 1);
+		//elements.splice(largelevel, 1);
+	}
+	return result;
+}
+
+function sortListOld() {
     var listitems = $('.languages > .language-choice').get();
     listitems.sort(function(a, b) { return $(b).find('li.language-choice').size() - $(a).find('li.language-choice').size(); });
     $.each(listitems, function(idx, itm) { $(itm).insertBefore('.languages > .divider'); });
@@ -133,8 +158,8 @@ function sortList() {
 $(document).on({
     mouseenter: function() {
 		// Do nothing if we've already updated it
-		if(document.getElementsByClassName("_2PurW")[0].getElementsByTagName("h6")[0].textContent == header1[activelanguagefrom] || $('ul.languages ul').size() > 0)
-			return;
+		if($(this)[0].getElementsByClassName('FromLang').length > 0)
+            return;
 
 		// Get and update languages in local storage
 		var courses = updateCourses();
@@ -197,6 +222,7 @@ $(document).on({
         if($('ul.languages ul').size() > 0)
             return;
 
+		console.log("passes it");
         // Get and update languages in local storage
         var A = duo.user.attributes;
         var courses = updateCourses(A);
@@ -244,7 +270,7 @@ $(document).on({
             }
         });
 
-        sortList();
+        sortListOld();
     }
 }, '.dropdown.topbar-language');
 
