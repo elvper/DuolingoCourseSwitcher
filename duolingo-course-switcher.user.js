@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.3
+ // @version     1.0.4
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -29,7 +29,7 @@ var levelsxp = [60, 120, 200, 300, 450, 750, 1125, 1650, 2250, 3000, 3900, 4900,
 var flagpos = "", flcounter = 0;
 for (i = 0; i < flagssvgpos.length; i++) {
 	for (j = 0; j < flagssvgpos[i].length; j++) {
-		if (flagssvgpos[i][j] != 0){
+		if (flagssvgpos[i][j] !== 0){
 			flagpos += '.FromLang a > span.flag.flag-svg-micro.flag-'+flagssvgpos[i][j]+' {background-position: -'+j*38+'px -'+i*38+'px;}';
 		}
 	}
@@ -48,7 +48,8 @@ document.head.appendChild($('<style type="text/css">'+
 	'._1XE6M {overflow: visible;}'+
 	'.FromLang a span.flag.flag-svg-micro {background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/flag-sprite11.svg); background-color: rgba(0,0,0,0.1); margin: 0; display: inline-block; vertical-align: middle; border-radius: 200px; width: 30px; height: 30px; background-size: 380px; position: relative; left: -35px; transform: scale(.75);}'+
 	'._2kNgI._1qBnH.FromLang > a > span, ._2kNgI._1qBnH.extra-choice > a > span {position: relative; left: -30px;}'+
-	'.FromLang > .language-sub-courses > .head {height: 36px; position: relative; top: 10px; padding: 0px 20px;}' +
+	'.FromLang > .language-sub-courses > .head {height: 36px; padding: 0px 20px;}' +
+	'.FromLang > .language-sub-courses > .head > h6 {position: relative; top: 10px;}' +
 	'._2PurW {padding: 0px 20px;}' +
 	'.sublname {color: #000000 !important;}' +
 	'.FromLang:hover > a > .sublname {color: #FFFFFF !important;}' +
@@ -188,7 +189,7 @@ $(document).on({
 				fromlanguagenodes[i].className += ' HideThis';
 			}
 		}
-		
+
 		// Change top-level heading
 		var header2 = document.getElementsByClassName("_2PurW")[0].getElementsByTagName("h6")[0].textContent;
 		document.getElementsByClassName("_2PurW")[0].getElementsByTagName("h6")[0].textContent = header1[activelanguagefrom];
