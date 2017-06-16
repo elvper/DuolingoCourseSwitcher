@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.4
+ // @version     1.0.5
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -46,15 +46,16 @@ document.head.appendChild($('<style type="text/css">'+
 	'._1XE6M .FromLang:hover .language-sub-courses {display: block !important;}'+
 	'._2kNgI._1qBnH.language-choice a span {color: #a9a9a9;}'+
 	'._1XE6M {overflow: visible;}'+
-	'.FromLang a span.flag.flag-svg-micro {background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/flag-sprite11.svg); background-color: rgba(0,0,0,0.1); margin: 0; display: inline-block; vertical-align: middle; border-radius: 200px; width: 30px; height: 30px; background-size: 380px; position: relative; left: -35px; transform: scale(.75);}'+
-	'._2kNgI._1qBnH.FromLang > a > span, ._2kNgI._1qBnH.extra-choice > a > span {position: relative; left: -30px;}'+
+	'.FromLang a span.flag.flag-svg-micro {background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/flag-sprite11.svg); background-color: rgba(0,0,0,0.1); margin: 0; display: inline-block; vertical-align: middle; border-radius: 200px; width: 30px; height: 30px; background-size: 380px; position: relative; left: -35px; transform: scale(.85);}'+
+	'._2kNgI._1qBnH.FromLang > a > span, ._2kNgI._1qBnH.extra-choice > a > span {position: relative; left: -35px;}'+
 	'.FromLang > .language-sub-courses > .head {height: 36px; padding: 0px 20px;}' +
 	'.FromLang > .language-sub-courses > .head > h6 {position: relative; top: 10px;}' +
 	'._2PurW {padding: 0px 20px;}' +
-	'.sublname {color: #000000 !important;}' +
+	'.sublname {color: #000000 !important; margin-left: 3px;}' +
 	'.FromLang:hover > a > .sublname {color: #FFFFFF !important;}' +
 	'._2kNgI._1qBnH:hover > a > .sublname, ._2kNgI._1qBnH:hover > a > .gray {color: #FFFFFF !important;}' +
 	'.wspace {height: 8px;}' +
+	'.dropdown-menu > .language-choice > a > .flag {transform: scale(1.5);}' +
 	flagpos+
 	'</style>').get(0));
 
@@ -113,7 +114,12 @@ function updateCourses() {
 	activelanguageto = cur_lang_data.currentCourse.learningLanguage;
 	courses[activelanguagefrom] = {};
 	courses[activelanguagefrom] = learning;
-	GM_setValue('dcs_courses', JSON.stringify(courses));
+	if(typeof courses[activelanguagefrom][0].language !== "undefined") {
+		GM_setValue('dcs_courses', JSON.stringify(courses));
+	} else {
+		console.log("Error: undefined");
+		getCourseData();
+	}
 	return courses;
 }
 
