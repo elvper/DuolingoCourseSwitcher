@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.8
+ // @version     1.0.9
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -89,7 +89,7 @@ function getUserId(){
 	var iserror = 0;
 	var userid = "";
 	try {
-		var userid = document.getElementsByClassName('_3Kp8s')[0].getAttribute("src");
+		userid = document.getElementsByClassName('_3Kp8s')[0].getAttribute("src");
 		userid = userid.substr(userid.search("avatars") + 8);
 		userid = userid.substr(0, userid.search("/"));
 		getCourseData(userid);
@@ -103,7 +103,7 @@ function getUserId(){
 function initiate(){
 	var retryGetID = setInterval(function(){
 		var failed = getUserId();
-		if(failed === 0){
+		if(failed === 0 || document.getElementById("app")){
 			clearInterval(retryGetID);
 		}
 	}, 50);
