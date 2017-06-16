@@ -51,6 +51,7 @@ document.head.appendChild($('<style type="text/css">'+
 	'.FromLang > .language-sub-courses > .head {height: 36px; position: relative; top: 10px; padding: 0px 20px;}' +
 	'._2PurW {padding: 0px 20px;}' +
 	'.sublname {color: #000000 !important;}' +
+	'.wspace {height: 8px;}' +
 	flagpos+
     '</style>').get(0));
 
@@ -204,7 +205,8 @@ $(document).on({
 					sub.addClass('_1oVFS');
 				}
 			});
-
+			var whitespace = $('<div class="wspace"></div>');
+			whitespace.appendTo('ul.'+from);
 			if(from == activelanguagefrom) {
 				fromCourse.addClass('_1oVFS');
 			}
@@ -281,6 +283,3 @@ $(document).on({
         $(this).children('.language-sub-courses').attr('style', 'display: none !important');
     }
 }, '.choice');
-
-
-
