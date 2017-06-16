@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.5
+ // @version     1.0.6
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -85,13 +85,12 @@ function getCourseData(){
 }
 getCourseData();
 
-function updateCourses() {
+function updateCourses(cur_lang_data) {
 	if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
 		// switch to greasemonkey storage
 		GM_setValue('dcs_courses', localStorage.getItem('dcs_courses', '{}'));
 	}
 	var courses = JSON.parse(GM_getValue('dcs_courses', '{}'));
-	var cur_lang_data = curlangdata;
 	//xp to level
 	for (i = 0; i < cur_lang_data.courses.length; i++) {
 		cur_lang_data.courses[i].language = cur_lang_data.courses[i].learningLanguage;
@@ -172,7 +171,7 @@ $(document).on({
 			return;
 
 		// Get and update languages in local storage
-		var courses = updateCourses();
+		var courses = updateCourses(JSON.parse(JSON.stringify(curlangdata)));
 
 		// Do nothing if there's only one base language
 		if(Object.keys(courses).length < 2)
