@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.7
+ // @version     1.0.8
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -73,17 +73,42 @@ function switchCourse(from, to) {
 }
 
 var curlangdata = "";
-function getCourseData(){
+function getCourseData(userid){
 	var xhttp = new XMLHttpRequest();
+	var xurl = "https://www.duolingo.com/2016-04-13/users/" + userid + "?fields=courses,currentCourse";
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			curlangdata = JSON.parse(this.responseText);
 		}
 	};
-	xhttp.open("GET", "https://www.duolingo.com/2016-04-13/users/177905737?fields=courses,currentCourse", true);
+	xhttp.open("GET", xurl, true);
 	xhttp.send();
 }
-getCourseData();
+
+function getUserId(){
+	var iserror = 0;
+	var userid = "";
+	try {
+		var userid = document.getElementsByClassName('_3Kp8s')[0].getAttribute("src");
+		userid = userid.substr(userid.search("avatars") + 8);
+		userid = userid.substr(0, userid.search("/"));
+		getCourseData(userid);
+	} catch(err) {
+		console.log("userid not found");
+		iserror = 1;
+	}
+	return iserror;
+}
+
+function initiate(){
+	var retryGetID = setInterval(function(){
+		var failed = getUserId();
+		if(failed === 0){
+			clearInterval(retryGetID);
+		}
+	}, 50);
+}
+initiate();
 
 function updateCourses(cur_lang_data) {
 	if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
