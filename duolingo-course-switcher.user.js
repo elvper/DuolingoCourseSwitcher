@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.6
+ // @version     1.0.7
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -221,7 +221,7 @@ $(document).on({
 
 		sortList();
 	}
-}, '._3I51r._3HsQj');
+}, '._3I51r._3HsQj._2OF7V');
 
 //old site
 $(document).on({
@@ -232,7 +232,7 @@ $(document).on({
 
 		// Get and update languages in local storage
 		var A = duo.user.attributes;
-		var courses = updateCourses(A);
+		var courses = updateCoursesOld(A);
 
 		// Do nothing if there's only one base language
 		if(Object.keys(courses).length < 2)
