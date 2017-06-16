@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.2
+ // @version     1.0.3
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -60,39 +60,39 @@ document.head.appendChild($('<style type="text/css">'+
 var header1 = JSON.parse('{"dn": "van", "sv": "fr\\u00e5n", "fr": "de", "hu": "-b\\u00f3l", "eo": "de", "tr": "-den", "es": "desde", "ro": "din", "ja": "\\u304b\\u3089", "vi": "t\\u1eeb", "it": "da", "he": "\\u05de", "el": "\\u03b1\\u03c0\\u03cc", "ru": "\\u0441", "ar": "\\u0645\\u0646", "en": "from", "ga": "\\u00f3", "cs": "od", "pt": "de", "de": "von", "zs": "\\u5f9e", "pl": "z"}');
 
 function switchCourse(from, to) {
-    $.post('/api/1/me/switch_language', {
-            from_language: from,
-            learning_language: to
-        },
-        function (data) {
-            location.reload();
-        }
-    );
+	$.post('/api/1/me/switch_language', {
+		from_language: from,
+		learning_language: to
+	},
+		function (data) {
+			location.reload();
+		}
+	);
 }
 
 var curlangdata = "";
 function getCourseData(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            curlangdata = JSON.parse(this.responseText);
-        }
-    };
-    xhttp.open("GET", "https://www.duolingo.com/2016-04-13/users/177905737?fields=courses,currentCourse", true);
-    xhttp.send();
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			curlangdata = JSON.parse(this.responseText);
+		}
+	};
+	xhttp.open("GET", "https://www.duolingo.com/2016-04-13/users/177905737?fields=courses,currentCourse", true);
+	xhttp.send();
 }
 getCourseData();
 
 function updateCourses() {
-    if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
+	if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
 		// switch to greasemonkey storage
 		GM_setValue('dcs_courses', localStorage.getItem('dcs_courses', '{}'));
-    }
-    var courses = JSON.parse(GM_getValue('dcs_courses', '{}'));
+	}
+	var courses = JSON.parse(GM_getValue('dcs_courses', '{}'));
 	var cur_lang_data = curlangdata;
 	//xp to level
-    for (i = 0; i < cur_lang_data.courses.length; i++) {
-        cur_lang_data.courses[i].language = cur_lang_data.courses[i].learningLanguage;
+	for (i = 0; i < cur_lang_data.courses.length; i++) {
+		cur_lang_data.courses[i].language = cur_lang_data.courses[i].learningLanguage;
 		if (cur_lang_data.courses[i].xp > 29999){
 			cur_lang_data.courses[i].level = 25;
 		} else {
@@ -106,30 +106,30 @@ function updateCourses() {
 		delete cur_lang_data.courses[i].xp;
 		delete cur_lang_data.courses[i].fromLanguage;
 		delete cur_lang_data.courses[i].learningLanguage;
-    }
+	}
 	var learning = cur_lang_data.courses;
 	activelanguagefrom = cur_lang_data.currentCourse.fromLanguage;
 	activelanguageto = cur_lang_data.currentCourse.learningLanguage;
 	courses[activelanguagefrom] = {};
-    courses[activelanguagefrom] = learning;
-    GM_setValue('dcs_courses', JSON.stringify(courses));
-    return courses;
+	courses[activelanguagefrom] = learning;
+	GM_setValue('dcs_courses', JSON.stringify(courses));
+	return courses;
 }
 
 function updateCoursesOld(A) {
-    if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
-      // switch to greasemonkey storage
-      GM_setValue('dcs_courses', localStorage.getItem('dcs_courses'));
-    }
-    var courses = JSON.parse(GM_getValue('dcs_courses', '{}'));
-    var learning = [].filter.call(A.languages, function(lang){ return lang.learning; });
-    courses[A.ui_language] = learning.map(function(lang){ return _(lang).pick('language', 'level'); });
-    GM_setValue('dcs_courses', JSON.stringify(courses));
-    return courses;
+	if(localStorage.getItem('dcs_courses') && !GM_getValue('dcs_courses')){
+		// switch to greasemonkey storage
+		GM_setValue('dcs_courses', localStorage.getItem('dcs_courses'));
+	}
+	var courses = JSON.parse(GM_getValue('dcs_courses', '{}'));
+	var learning = [].filter.call(A.languages, function(lang){ return lang.learning; });
+	courses[A.ui_language] = learning.map(function(lang){ return _(lang).pick('language', 'level'); });
+	GM_setValue('dcs_courses', JSON.stringify(courses));
+	return courses;
 }
 
 function sortList() {
-    var listitems = [].slice.call(document.getElementsByClassName("FromLang"));
+	var listitems = [].slice.call(document.getElementsByClassName("FromLang"));
 	var sumlevel = [];
 	for (j = 0; j < listitems.length; j++) {
 		sumlevel[j] = 0;
@@ -138,7 +138,7 @@ function sortList() {
 		}
 	}
 	var sortedlist = sortByLevel(listitems, sumlevel);
-    $.each(sortedlist, function(idx, itm) { $(itm).insertBefore('._1oVFS.HideThis'); });
+	$.each(sortedlist, function(idx, itm) { $(itm).insertBefore('._1oVFS.HideThis'); });
 }
 
 function sortByLevel(elements, levels) {
@@ -152,16 +152,17 @@ function sortByLevel(elements, levels) {
 }
 
 function sortListOld() {
-    var listitems = $('.languages > .language-choice').get();
-    listitems.sort(function(a, b) { return $(b).find('li.language-choice').size() - $(a).find('li.language-choice').size(); });
-    $.each(listitems, function(idx, itm) { $(itm).insertBefore('.languages > .divider'); });
+	var listitems = $('.languages > .language-choice').get();
+	listitems.sort(function(a, b) { return $(b).find('li.language-choice').size() - $(a).find('li.language-choice').size(); });
+	$.each(listitems, function(idx, itm) { $(itm).insertBefore('.languages > .divider'); });
 }
 
+//new site
 $(document).on({
-    mouseenter: function() {
+	mouseenter: function() {
 		// Do nothing if we've already updated it
 		if($(this)[0].getElementsByClassName('FromLang').length > 0)
-            return;
+			return;
 
 		// Get and update languages in local storage
 		var courses = updateCourses();
@@ -182,7 +183,7 @@ $(document).on({
 
 		// Remove the current list
 		var fromlanguagenodes = document.getElementsByClassName('_2kNgI _1qBnH');
-		for (i = 0; i < fromlanguagenodes.length; i++) {
+			for (i = 0; i < fromlanguagenodes.length; i++) {
 			if(fromlanguagenodes[i].className.indexOf('HideThis') == -1 && fromlanguagenodes[i].className.indexOf('FromLang') == -1 ){
 				fromlanguagenodes[i].className += ' HideThis';
 			}
@@ -195,9 +196,7 @@ $(document).on({
 		// Create top-level list using source languages
 		$.each(courses, function( from, value ) {
 			fromCourse = '<li class="_2kNgI _1qBnH FromLang"><a href="javascript:;"><span class="flag flag-svg-micro flag-'+from+'"></span><span class="sublname">'+languageNames[from]+'</span></a><ul class="_1ZY-H language-sub-courses '+from+'"><li class="head"><h6>'+header2+'</h6></li></ul></li>';
-
 			fromCourse = $(fromCourse).appendTo('._1XE6M');
-
 			value.sort(function(a, b) { return b.level - a.level; });
 			$.each(value, function( fromx, v ) {
 				to = v.language;
@@ -215,73 +214,70 @@ $(document).on({
 		});
 
 		sortList();
-    }
+	}
 }, '._3I51r._3HsQj');
-
-//new site
-$(document).on({
-    mouseenter: function() {
-        // Do nothing if we've already updated it
-        if($('ul.languages ul').size() > 0)
-            return;
-
-        // Get and update languages in local storage
-        var A = duo.user.attributes;
-        var courses = updateCourses(A);
-
-        // Do nothing if there's only one base language
-        if(Object.keys(courses).length < 2)
-            return;
-
-        // I'm not sure why this can't be invoked in top level.
-        $('#topbar').on('click', '.extra-choice', function(){
-            var from = $(this).attr('data-from');
-            var to = $(this).attr('data-to');
-            switchCourse(from, to);
-        });
-
-        // Get localized strings
-        var languageNames = duo.language_names_ui[A.ui_language];
-        var levelLabel = $('.languages .gray').first().text().split(' ')[0]+' ';
-
-        // Remove the current list
-        $('.languages > .language-choice').remove();
-
-        // Change top-level heading
-        var header2 = $('.languages > .head > h6').text();
-        $('.languages > .head > h6').text(header1[A.ui_language] || 'From');
-
-        // Create top-level list using source languages
-        $.each(courses, function( from, value ) {
-            fromCourse = '<li class="language-choice choice"><a href="javascript:;"><span class="flag flag-svg-micro flag-'+from+'"></span><span>'+languageNames[from]+'</span></a><ul class="dropdown-menu language-sub-courses '+from+'"><li class="head"><h6>'+header2+'</h6></li></ul></li>';
-
-            fromCourse = $(fromCourse).insertBefore('.languages > .divider');
-
-            value.sort(function(a, b) { return b.level - a.level; });
-            $.each(value, function( fromx, v ) {
-                to = v.language;
-                sub = $('<li class="language-choice extra-choice" data-from="'+from+'" data-to="'+to+'"><a href="javascript:;"><span class="flag flag-svg-micro flag-'+to+'"></span><span>'+languageNames[to]+'</span> <span class="gray">'+levelLabel+v.level+'</span></a></li>');
-                sub.appendTo('ul.'+from);
-                if(from == A.ui_language && to == A.learning_language) {
-                    sub.addClass('active');
-                }
-            });
-
-            if(from == A.ui_language) {
-                fromCourse.addClass('active');
-            }
-        });
-
-        sortListOld();
-    }
-}, '.dropdown.topbar-language');
 
 //old site
 $(document).on({
-    mouseenter: function () {
-        $(this).children('.language-sub-courses').attr('style', 'display: block !important');
-    },
-    mouseleave: function () {
-        $(this).children('.language-sub-courses').attr('style', 'display: none !important');
-    }
+	mouseenter: function() {
+		// Do nothing if we've already updated it
+		if($('ul.languages ul').size() > 0)
+			return;
+
+		// Get and update languages in local storage
+		var A = duo.user.attributes;
+		var courses = updateCourses(A);
+
+		// Do nothing if there's only one base language
+		if(Object.keys(courses).length < 2)
+			return;
+
+		// I'm not sure why this can't be invoked in top level.
+		$('#topbar').on('click', '.extra-choice', function(){
+			var from = $(this).attr('data-from');
+			var to = $(this).attr('data-to');
+			switchCourse(from, to);
+		});
+
+		// Get localized strings
+		var languageNames = duo.language_names_ui[A.ui_language];
+		var levelLabel = $('.languages .gray').first().text().split(' ')[0]+' ';
+
+		// Remove the current list
+		$('.languages > .language-choice').remove();
+
+		// Change top-level heading
+		var header2 = $('.languages > .head > h6').text();
+		$('.languages > .head > h6').text(header1[A.ui_language] || 'From');
+
+		// Create top-level list using source languages
+		$.each(courses, function( from, value ) {
+			fromCourse = '<li class="language-choice choice"><a href="javascript:;"><span class="flag flag-svg-micro flag-'+from+'"></span><span>'+languageNames[from]+'</span></a><ul class="dropdown-menu language-sub-courses '+from+'"><li class="head"><h6>'+header2+'</h6></li></ul></li>';
+			fromCourse = $(fromCourse).insertBefore('.languages > .divider');
+			value.sort(function(a, b) { return b.level - a.level; });
+			$.each(value, function( fromx, v ) {
+				to = v.language;
+				sub = $('<li class="language-choice extra-choice" data-from="'+from+'" data-to="'+to+'"><a href="javascript:;"><span class="flag flag-svg-micro flag-'+to+'"></span><span>'+languageNames[to]+'</span> <span class="gray">'+levelLabel+v.level+'</span></a></li>');
+				sub.appendTo('ul.'+from);
+				if(from == A.ui_language && to == A.learning_language) {
+					sub.addClass('active');
+				}
+			});
+
+			if(from == A.ui_language) {
+				fromCourse.addClass('active');
+			}
+		});
+
+		sortListOld();
+	}
+}, '.dropdown.topbar-language');
+
+$(document).on({
+	mouseenter: function () {
+		$(this).children('.language-sub-courses').attr('style', 'display: block !important');
+	},
+	mouseleave: function () {
+		$(this).children('.language-sub-courses').attr('style', 'display: none !important');
+	}
 }, '.choice');
