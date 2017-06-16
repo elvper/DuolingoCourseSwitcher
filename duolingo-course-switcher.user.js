@@ -1,16 +1,16 @@
-// ==UserScript==
-// @name        Duolingo Course Switcher
-// @description Works on both the new an old website. Simplifies switching between courses that use different interface language (i.e., base language, the language from which you learn).
-// @namespace   http://moviemap.me/duoinc
-// @include     https://www.duolingo.com/*
-// @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
-// @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
-// @version     1
-// @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-// @grant       GM_getValue
-// @grant       GM_setValue
-// @author      elvper, arekolek, mofman, gmelikov, christeefury, guillaumebrunerie
-// ==/UserScript==
+ // ==UserScript==
+ // @name        Duolingo Course Switcher
+ // @description Works on both the new an old website. Simplifies switching between courses that use different interface language (i.e., base language, the language from which you learn).
+ // @namespace   http://moviemap.me/duoinc
+ // @include     https://www.duolingo.com/*
+ // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
+ // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
+ // @version     1.0.1
+ // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
+ // @grant       GM_getValue
+ // @grant       GM_setValue
+ // @author      elvper, arekolek, mofman, gmelikov, christeefury, guillaumebrunerie
+ // ==/UserScript==
 
 var duo = unsafeWindow.duo;
 var _   = unsafeWindow._;
@@ -144,7 +144,6 @@ function sortByLevel(elements, levels) {
 		var largelevel = levels.indexOf(Math.max.apply(null, levels));
 		result[i] = elements.splice(largelevel, 1)[0];
 		levels.splice(largelevel, 1);
-		//elements.splice(largelevel, 1);
 	}
 	return result;
 }
@@ -222,7 +221,6 @@ $(document).on({
         if($('ul.languages ul').size() > 0)
             return;
 
-		console.log("passes it");
         // Get and update languages in local storage
         var A = duo.user.attributes;
         var courses = updateCourses(A);
@@ -283,3 +281,6 @@ $(document).on({
         $(this).children('.language-sub-courses').attr('style', 'display: none !important');
     }
 }, '.choice');
+
+
+
