@@ -4,7 +4,11 @@ This userscript for [Duolingo](https://www.duolingo.com/) simplifies switching y
 
 ![Screenshot before and after](http://i.imgur.com/BOSvFgR.png)
 
-There is a [discussion thread dedicated to this script](https://www.duolingo.com/comment/6079283) at Duolingo forums.
+[Discussion thread on Duolingo's forum about the new version for the new website.](https://www.duolingo.com/comment/23112102)
+
+### References to earlier version of the script:
+By arekolek: [discussion thread on Duolingo's forum](https://www.duolingo.com/comment/6079283)
+By andrewmof: [discussion thread on Duolingo's forum](https://www.duolingo.com/comment/3088922)
 
 ### Installing
 
