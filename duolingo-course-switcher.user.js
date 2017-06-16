@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.1
+ // @version     1.0.2
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -39,9 +39,9 @@ var languageNames = {"gu":"Gujarati","ga":"Irish","gn":"Guarani (Jopará)","gl":
 
 document.head.appendChild($('<style type="text/css">'+
 	'.language-choice > .language-sub-courses {position:absolute; top:-28px !important; color:#000; background-color: #fff; min-width: 150px; min-height: 50px; display: none !important;}'+
-    '.FromLang > ._1ZY-H.language-sub-courses {position:absolute; color:#000; background-color: #fff; min-width: 150px; min-height: 50px; display: none; margin-top:-69px !important;}'+
-    'html[dir="ltr"] .language-sub-courses {left:200px !important;}'+
-    'html[dir="rtl"] .language-sub-courses {right:200px !important;}'+
+	'.FromLang > ._1ZY-H.language-sub-courses {position:absolute; color:#000; background-color: #fff; min-width: 150px; min-height: 50px; display: none; margin-top:-69px !important;}'+
+	'html[dir="ltr"] .language-sub-courses {left:200px !important;}'+
+	'html[dir="rtl"] .language-sub-courses {right:200px !important;}'+
 	'.HideThis {display: none;}'+
 	'._1XE6M .FromLang:hover .language-sub-courses {display: block !important;}'+
 	'._2kNgI._1qBnH.language-choice a span {color: #a9a9a9;}'+
@@ -51,9 +51,11 @@ document.head.appendChild($('<style type="text/css">'+
 	'.FromLang > .language-sub-courses > .head {height: 36px; position: relative; top: 10px; padding: 0px 20px;}' +
 	'._2PurW {padding: 0px 20px;}' +
 	'.sublname {color: #000000 !important;}' +
+	'.FromLang:hover > a > .sublname {color: #FFFFFF !important;}' +
+	'._2kNgI._1qBnH:hover > a > .sublname, ._2kNgI._1qBnH:hover > a > .gray {color: #FFFFFF !important;}' +
 	'.wspace {height: 8px;}' +
 	flagpos+
-    '</style>').get(0));
+	'</style>').get(0));
 
 var header1 = JSON.parse('{"dn": "van", "sv": "fr\\u00e5n", "fr": "de", "hu": "-b\\u00f3l", "eo": "de", "tr": "-den", "es": "desde", "ro": "din", "ja": "\\u304b\\u3089", "vi": "t\\u1eeb", "it": "da", "he": "\\u05de", "el": "\\u03b1\\u03c0\\u03cc", "ru": "\\u0441", "ar": "\\u0645\\u0646", "en": "from", "ga": "\\u00f3", "cs": "od", "pt": "de", "de": "von", "zs": "\\u5f9e", "pl": "z"}');
 
