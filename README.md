@@ -13,9 +13,8 @@ This userscript for [Duolingo](https://www.duolingo.com/) simplifies switching y
 ### Installing
 
 1. If haven't already, install the appropriate extension for your browser (restarting your browser afterwards if necessary):
- * Chrome and other Chromium browsers: [Tampermonkey]
- * Other browsers currently not supported.
- (https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
+ * Chrome and other Chromium browsers: [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
+ * Other browsers are currently NOT supported.
 2. Click [here](https://github.com/arekolek/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js) to install the userscript.
 3. Confirm the installation when prompted.
 
