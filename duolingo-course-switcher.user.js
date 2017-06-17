@@ -5,7 +5,7 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.9b
+ // @version     1.0.9c
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
@@ -30,7 +30,7 @@ var flagpos = "", flcounter = 0;
 for (i = 0; i < flagssvgpos.length; i++) {
 	for (j = 0; j < flagssvgpos[i].length; j++) {
 		if (flagssvgpos[i][j] !== 0){
-			flagpos += '.FromLang a > span.flag.flag-svg-micro.flag-'+flagssvgpos[i][j]+' {background-position: -'+j*38+'px -'+i*38+'px;}';
+			flagpos += '.FromLang a > span.flag.flag-svg-micro.flag-'+flagssvgpos[i][j]+' {background-position: -'+j*38+'px -'+i*76+'px;}';
 		}
 	}
 }
@@ -51,7 +51,7 @@ document.head.appendChild($('<style type="text/css">'+
 	'.FromLang > .language-sub-courses > .head {height: 36px; padding: 0px 20px;}' +
 	'.FromLang > .language-sub-courses > .head > h6 {position: relative; top: 10px;}' +
 	'._2PurW {padding: 0px 20px;}' +
-	'.sublname {color: #000000 !important; margin-left: 3px;}' +
+	'.sublname {color: #000000 !important; margin-left: 5px;}' +
 	'.FromLang:hover > a > .sublname {color: #FFFFFF !important;}' +
 	'._2kNgI._1qBnH:hover > a > .sublname, ._2kNgI._1qBnH:hover > a > .gray {color: #FFFFFF !important;}' +
 	'.wspace {height: 8px;}' +
