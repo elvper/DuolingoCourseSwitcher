@@ -5,12 +5,15 @@
  // @include     https://www.duolingo.com/*
  // @downloadURL https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
  // @updateURL   https://github.com/elvper/DuolingoCourseSwitcher/raw/master/duolingo-course-switcher.user.js
- // @version     1.0.9c
+ // @version     1.1.0
  // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
  // @grant       GM_getValue
  // @grant       GM_setValue
  // @author      elvper, arekolek, mofman, gmelikov, christeefury, guillaumebrunerie
  // ==/UserScript==
+
+//You can change the flagsize by changing the value below. The default value is 0.85. The value should be between 0.5 and 1.
+var flagsize = 0.85;
 
 var duo = unsafeWindow.duo;
 var _   = unsafeWindow._;
@@ -24,6 +27,7 @@ var flagssvgpos = [["fr", "es", "de", "pt", "it", "en", "ga", "hu", "ru", "pl"],
 ["gug", "sw", "tl"]];
 //yi = yiddish, ht = haitian creole, ta = tamil, hv = high Valyrian
 var levelsxp = [60, 120, 200, 300, 450, 750, 1125, 1650, 2250, 3000, 3900, 4900, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 17000, 19000, 22500, 26000, 30000];
+var languageNames = {"gu":"Gujarati","ga":"Irish","gn":"Guarani (Jopará)","gl":"Galician","la":"Latin","tt":"Tatar","tr":"Turkish","lv":"Latvian","tl":"Tagalog","th":"Thai","te":"Telugu","ta":"Tamil","yi":"Yiddish","dk":"Dothraki","de":"German","db":"Dutch (Belgium)","da":"Danish","uz":"Uzbek","el":"Greek","eo":"Esperanto","en":"English","zc":"Chinese (Cantonese)","eu":"Basque","et":"Estonian","ep":"English (Pirate)","es":"Spanish","zs":"Chinese","ru":"Russian","ro":"Romanian","be":"Belarusian","bg":"Bulgarian","ms":"Malay","bn":"Bengali","ja":"Japanese","or":"Oriya","xl":"Lolcat","ca":"Catalan","xe":"Emoji","xz":"Zombie","cy":"Welsh","cs":"Czech","pt":"Portuguese","lt":"Lithuanian","pa":"Punjabi (Gurmukhi)","pl":"Polish","hy":"Armenian","hr":"Croatian","hv":"High Valyrian","ht":"Haitian Creole","hu":"Hungarian","hi":"Hindi","he":"Hebrew","mb":"Malay (Brunei)","mm":"Malay (Malaysia)","ml":"Malayalam","mn":"Mongolian","mk":"Macedonian","ur":"Urdu","kk":"Kazakh","uk":"Ukrainian","mr":"Marathi","my":"Burmese","dn":"Dutch","af":"Afrikaans","vi":"Vietnamese","is":"Icelandic","it":"Italian","kn":"Kannada","zt":"Chinese (Traditional)","as":"Assamese","ar":"Arabic","zu":"Zulu","az":"Azeri","id":"Indonesian","nn":"Norwegian (Nynorsk)","no":"Norwegian","nb":"Norwegian (Bokmål)","ne":"Nepali","fr":"French","fa":"Farsi","fi":"Finnish","fo":"Faroese","ka":"Georgian","ss":"Swedish (Sweden)","sq":"Albanian","ko":"Korean","sv":"Swedish","km":"Khmer","kl":"Klingon","sk":"Slovak","sn":"Sindarin","sl":"Slovenian","ky":"Kyrgyz","sf":"Swedish (Finland)","sw":"Swahili"};
 
 //create the css for each flag
 var flagpos = "", flcounter = 0;
@@ -34,8 +38,7 @@ for (i = 0; i < flagssvgpos.length; i++) {
 		}
 	}
 }
-
-var languageNames = {"gu":"Gujarati","ga":"Irish","gn":"Guarani (Jopará)","gl":"Galician","la":"Latin","tt":"Tatar","tr":"Turkish","lv":"Latvian","tl":"Tagalog","th":"Thai","te":"Telugu","ta":"Tamil","yi":"Yiddish","dk":"Dothraki","de":"German","db":"Dutch (Belgium)","da":"Danish","uz":"Uzbek","el":"Greek","eo":"Esperanto","en":"English","zc":"Chinese (Cantonese)","eu":"Basque","et":"Estonian","ep":"English (Pirate)","es":"Spanish","zs":"Chinese","ru":"Russian","ro":"Romanian","be":"Belarusian","bg":"Bulgarian","ms":"Malay","bn":"Bengali","ja":"Japanese","or":"Oriya","xl":"Lolcat","ca":"Catalan","xe":"Emoji","xz":"Zombie","cy":"Welsh","cs":"Czech","pt":"Portuguese","lt":"Lithuanian","pa":"Punjabi (Gurmukhi)","pl":"Polish","hy":"Armenian","hr":"Croatian","hv":"High Valyrian","ht":"Haitian Creole","hu":"Hungarian","hi":"Hindi","he":"Hebrew","mb":"Malay (Brunei)","mm":"Malay (Malaysia)","ml":"Malayalam","mn":"Mongolian","mk":"Macedonian","ur":"Urdu","kk":"Kazakh","uk":"Ukrainian","mr":"Marathi","my":"Burmese","dn":"Dutch","af":"Afrikaans","vi":"Vietnamese","is":"Icelandic","it":"Italian","kn":"Kannada","zt":"Chinese (Traditional)","as":"Assamese","ar":"Arabic","zu":"Zulu","az":"Azeri","id":"Indonesian","nn":"Norwegian (Nynorsk)","no":"Norwegian","nb":"Norwegian (Bokmål)","ne":"Nepali","fr":"French","fa":"Farsi","fi":"Finnish","fo":"Faroese","ka":"Georgian","ss":"Swedish (Sweden)","sq":"Albanian","ko":"Korean","sv":"Swedish","km":"Khmer","kl":"Klingon","sk":"Slovak","sn":"Sindarin","sl":"Slovenian","ky":"Kyrgyz","sf":"Swedish (Finland)","sw":"Swahili"};
+if (flagsize > 1){flagsize = 1;} else if (flagsize < 0.5){flagsize = 0.5;}
 
 document.head.appendChild($('<style type="text/css">'+
 	'.language-choice > .language-sub-courses {position:absolute; top:-28px !important; color:#000; background-color: #fff; min-width: 150px; min-height: 50px; display: none !important;}'+
@@ -46,7 +49,7 @@ document.head.appendChild($('<style type="text/css">'+
 	'._1XE6M .FromLang:hover .language-sub-courses {display: block !important;}'+
 	'._2kNgI._1qBnH.language-choice a span {color: #a9a9a9;}'+
 	'._1XE6M {overflow: visible;}'+
-	'.FromLang a span.flag.flag-svg-micro {background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/flag-sprite11.svg); background-color: rgba(0,0,0,0.1); margin: 0; display: inline-block; vertical-align: middle; border-radius: 200px; width: 30px; height: 30px; background-size: 380px; position: relative; left: -35px; transform: scale(.85);}'+
+	'.FromLang a span.flag.flag-svg-micro {background-image: url(//d35aaqx5ub95lt.cloudfront.net/images/flag-sprite11.svg); background-color: rgba(0,0,0,0.1); margin: 0; display: inline-block; vertical-align: middle; border-radius: 200px; width: 30px; height: 30px; background-size: 380px; position: relative; left: -35px; transform: scale(' + flagsize + ');}'+
 	'._2kNgI._1qBnH.FromLang > a > span, ._2kNgI._1qBnH.extra-choice > a > span {position: relative; left: -35px;}'+
 	'.FromLang > .language-sub-courses > .head {height: 36px; padding: 0px 20px;}' +
 	'.FromLang > .language-sub-courses > .head > h6 {position: relative; top: 10px;}' +
@@ -55,7 +58,7 @@ document.head.appendChild($('<style type="text/css">'+
 	'.FromLang:hover > a > .sublname {color: #FFFFFF !important;}' +
 	'._2kNgI._1qBnH:hover > a > .sublname, ._2kNgI._1qBnH:hover > a > .gray {color: #FFFFFF !important;}' +
 	'.wspace {height: 8px;}' +
-	'.dropdown-menu > .language-choice > a > .flag {transform: scale(1.5);}' +
+	'.dropdown-menu > .language-choice > a > .flag {transform: scale(' + (flagsize * 1.75) + ');}' +
 	flagpos+
 	'</style>').get(0));
 
